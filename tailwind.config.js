@@ -24,6 +24,9 @@ module.exports = {
       width:{},
       maxWidth:{},
       height:{},
+      gridTemplateColumns:{
+        'wrapper': '256px 1fr'
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
