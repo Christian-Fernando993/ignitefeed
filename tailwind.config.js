@@ -19,7 +19,8 @@ module.exports = {
         'gray-900': '#121214',
 
         // Cores
-        'green-500': '#00855f',
+        'green-500': '#00875F',
+        'green-300': '#00B37E',
       },
       width:{},
       maxWidth:{},
