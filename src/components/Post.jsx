@@ -1,23 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import Avatar from "@/assets/Avatar.jpg";
+import { Avatar } from "./Avatar";
+
+import avatar from "@/assets/Avatar.jpg";
+import { Comment } from "./Comment";
 
 export function Post() {
     return(
       <article className="gap-8 bg-gray-800 rounded-lg p-10">
         <header className="flex items-center justify-between">
           <div className="flex items-center  gap-4">
-            <Image 
-              src={Avatar} 
-              alt=""
-              className='w-16 h-16 rounded-lg border-4 border-gray-800 outline outline-2 outline-green-500'
-          />
+            <Avatar src={avatar} />
             <div className="flex flex-col">
               <strong className='text-gray-100 leading-6'>Christian Pereira</strong>
               <span className='text-gray-400 text-sm leading-6'>Front End</span>
             </div>
-  
           </div>
           <div>
               <time 
@@ -62,6 +60,12 @@ export function Post() {
           </footer>
   
         </form>
+
+        <div className=''>
+          <Comment />
+          <Comment />
+          <Comment />
+        </div>
       </article>
 
     )
