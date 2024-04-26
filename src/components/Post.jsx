@@ -6,9 +6,9 @@ import { Avatar } from "./Avatar";
 import avatar from "@/assets/Avatar.jpg";
 import { Comment } from "./Comment";
 
-export function Post() {
+export function Post({props}) {
     return(
-      <article className="gap-8 bg-gray-800 rounded-lg p-10">
+      <article className="gap-8 bg-gray-800 rounded-lg p-10 mb-10">
         <header className="flex items-center justify-between">
           <div className="flex items-center  gap-4">
             <Avatar src={avatar} />
