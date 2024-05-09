@@ -1,33 +1,53 @@
-import Image from "next/image";
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from 'date-fns/locale/pt-BR'
+
 import Link from "next/link";
-
 import { Avatar } from "./Avatar";
-
-import avatar from "@/assets/Avatar.jpg";
 import { Comment } from "./Comment";
 
-export function Post({props}) {
+export function Post({author, publishedAt, content}) {
+
+const publishedDateFormatted = format(publishedAt, "dd 'de' LLLL 'às' HH:mm'h'", {
+  locale: ptBR,
+})
+
+const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+  locale: ptBR,
+  addSuffix: true,
+})
+
     return(
       <article className="gap-8 bg-gray-800 rounded-lg p-10 mb-10">
         <header className="flex items-center justify-between">
           <div className="flex items-center  gap-4">
-            <Avatar src={avatar} />
+            <Avatar src={author.avatarUrl}  />
             <div className="flex flex-col">
-              <strong className='text-gray-100 leading-6'>Christian Pereira</strong>
-              <span className='text-gray-400 text-sm leading-6'>Front End</span>
+              <strong className='text-gray-100 leading-6'>{author.name}</strong>
+              <span className='text-gray-400 text-sm leading-6'>{author.role}</span>
             </div>
           </div>
           <div>
               <time 
-                  title="22 de Abril de 2024" 
-                  dateTime="2024-04-22 15:00:00"
+                  title={publishedDateFormatted} 
+                  dateTime={publishedAt.toISOString()}
                   className='text-gray-400 text-sm'
               >
-                Públicado há 1h
+                {publishedDateRelativeToNow}
               </time>
             </div>
         </header>
         <div>
+          {content.map(line => {
+            if(line.type === 'paragraph'){
+              return <p className="mt-4">{line.content}</p>
+            } else if (line.type === 'link') {
+              return <p className="mt-4">
+                <Link href="#" className="font-bold text-green-500 hover:text-green-300 no-underline">
+                  {line.content}
+                </Link>
+              </p>
+            }
+          })}
           <p className="mt-4">Fala galeraa 👋</p>
           <p className="mt-4">
             Acabei de subir mais um projeto no meu portfolio. É um projeto que fiz
@@ -44,6 +64,7 @@ export function Post({props}) {
             <Link href="#" className="font-bold text-green-500 hover:text-green-300 no-underline">#rocketseat</Link>
           </p>
         </div>
+
         <form className='w-full mt-6 pt-6 border border-transparent border-t-gray-600 flex flex-col group'>
           <strong className='text-gray-100 leading-6 mb-4'>Deixe seu Feedback</strong>
           <textarea 

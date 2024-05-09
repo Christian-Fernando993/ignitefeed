@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Avatar({hasBorder, src}) {
   return (
-    <Image
+    <Image 
       className={
         hasBorder
           ? "w-12 h-12 rounded-lg"
@@ -10,7 +10,9 @@ export function Avatar({hasBorder, src}) {
       }
       src={src}
       alt=""
-      width={"auto"}
+      width={0} 
+      height={0}
+      // width={"auto"}
     />
   );
 }
