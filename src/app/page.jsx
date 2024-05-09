@@ -27,12 +27,13 @@ const posts = [
     ],
     publishedAt: new Date('2024-04-22 15:00:00')
   },
+
   {
     id: 2,
     author: {
-      avatarUrl: 'https://github.com/Christian-Fernando993.png',
-      name: 'Paulo Borges',
-      role: 'Dev BackEnd Sr',
+      avatarUrl: 'https://github.com/joaonetogit.png',
+      name: 'João Pinheiro',
+      role: 'Estudante de Front End',
     },
     content: [
       {
@@ -41,7 +42,7 @@ const posts = [
       },
       {
         type: 'paragraph',
-        content: 'Acabei de subir mais um projeto no meu portfolio. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀'
+        content: 'AAAAAAcabei de subir mais um projeto no meu portfolio. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀'
       },
       {
         type: 'link',
