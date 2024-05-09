@@ -1,4 +1,6 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
 import Link from "next/link";
 
 import { Avatar } from "./Avatar";
@@ -6,7 +8,27 @@ import { Avatar } from "./Avatar";
 import avatar from "@/assets/Avatar.jpg";
 import { Comment } from "./Comment";
 
+
 export function Post({props}) {
+
+  const [comments, setComments] = useState(['Post muito bacana, hein?!'])
+  const [newCommentText, setNewCommentText] = useState('')
+
+  function handleCreateNewComment(event) {
+    event.preventDefault()
+
+    // const newCommentText = event.target.comment.value
+
+    setComments([...comments, newCommentText])
+    setNewCommentText('')
+  }
+
+  function handleNewCommentChange(){
+    setNewCommentText(event.target.value)
+  }
+
+
+
     return(
       <article className="gap-8 bg-gray-800 rounded-lg p-10 mb-10">
         <header className="flex items-center justify-between">
@@ -44,11 +66,15 @@ export function Post({props}) {
             <Link href="#" className="font-bold text-green-500 hover:text-green-300 no-underline">#rocketseat</Link>
           </p>
         </div>
-        <form className='w-full mt-6 pt-6 border border-transparent border-t-gray-600 flex flex-col group'>
+        <form  onSubmit={handleCreateNewComment}
+          className='w-full mt-6 pt-6 border border-transparent border-t-gray-600 flex flex-col group'>
           <strong className='text-gray-100 leading-6 mb-4'>Deixe seu Feedback</strong>
           <textarea 
+              name='comment'
               className='border-0 resize-none h-24 w-full text-gray-100 bg-gray-900 leading-5 rounded-lg p-4' 
               placeholder='Escreva um comentário...' 
+              value={newCommentText}
+              onChange={handleNewCommentChange}
           />
           <footer className='invisible max-h-0 group-focus-within:visible group-focus-within:max-h-none'>
               <button 
@@ -62,9 +88,9 @@ export function Post({props}) {
         </form>
 
         <div className=''>
-          <Comment />
-          <Comment />
-          <Comment />
+          {comments.map(comment => {
+            return <Comment key={comment} content={comment} />
+          })}
         </div>
       </article>
 

@@ -4,7 +4,7 @@ import { FiThumbsUp } from "react-icons/fi";
 import avatar from '@/assets/Avatar.jpg'
 import { Avatar } from "./Avatar";
 
-export function Comment() {
+export function Comment({content}) {
     return(
         <div className='mt-6 flex gap-4 '>
              <Avatar hasBorder='false' src={avatar} />
@@ -25,7 +25,7 @@ export function Comment() {
                             <FaRegTrashAlt size={20} />
                         </button>
                     </header>
-                    <p className='mt-4 text-gray-300'>Muito bom Devon, parabéns!! 👏👏</p>
+                    <p className='mt-4 text-gray-300'>{content}</p>
                 </div>
                 <footer className='mt-4'>
                     <button className='bg-transparent border-0 text-gray-400 flex items-center hover:text-green-300 transition font-bold'>

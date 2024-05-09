@@ -63,7 +63,7 @@ export default function Home() {
         {posts.map(post => {
           return (
             <Post 
-              key='post'
+              key={post.id}
               author={post.author}
               content={post.content}
               publishedAt={post.publishedAt}
