@@ -1,10 +1,23 @@
+import { useState } from 'react'
+
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiThumbsUp } from "react-icons/fi";
 
 import avatar from '@/assets/Avatar.jpg'
 import { Avatar } from "./Avatar";
 
-export function Comment({content}) {
+export function Comment({content, onDeleteComment}) {
+
+    const [likeCount, setLikeCount] = useState(0)
+
+    function handleLikeComment() {
+        setLikeCount(likeCount + 1)
+    }
+
+    function handleDeleteComment() {
+        onDeleteComment(content)
+    }
+
     return(
         <div className='mt-6 flex gap-4 '>
              <Avatar hasBorder='false' src={avatar} />
@@ -21,16 +34,22 @@ export function Comment({content}) {
                                 Cerca de 1h atrás
                             </time>
                        </div> 
-                        <button title='Deletar comentário' className='bg-transparent border-0 text-gray-400 hover:text-red-500 transition rounded-sm'>
+                        <button 
+                            onClick={handleDeleteComment}
+                            title='Deletar comentário' 
+                            className='bg-transparent border-0 text-gray-400 hover:text-red-500 transition rounded-sm'
+                        >
                             <FaRegTrashAlt size={20} />
                         </button>
                     </header>
                     <p className='mt-4 text-gray-300'>{content}</p>
                 </div>
                 <footer className='mt-4'>
-                    <button className='bg-transparent border-0 text-gray-400 flex items-center hover:text-green-300 transition font-bold'>
+                    <button 
+                        onClick={handleLikeComment}
+                        className='bg-transparent border-0 text-gray-400 flex items-center hover:text-green-300 transition font-bold'>
                         <FiThumbsUp className='mr-2' />
-                        Aplaudir <span className='before:content-["\2022"] before:px-1'>20</span>
+                        Aplaudir <span className='before:content-["\2022"] before:px-1'>{likeCount}</span>
                     </button>
                 </footer>
              </div>

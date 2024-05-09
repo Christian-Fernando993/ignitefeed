@@ -9,35 +9,43 @@ import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 
 
-export function Post({props}) {
+export function Post({author, publishedAt, content}) {
 
   const [comments, setComments] = useState(['Post muito bacana, hein?!'])
   const [newCommentText, setNewCommentText] = useState('')
 
+  const publishedDateFormatted = format(publishedAt, "dd 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR,
+  })
+  
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
   function handleCreateNewComment(event) {
     event.preventDefault()
-
-    // const newCommentText = event.target.comment.value
-
     setComments([...comments, newCommentText])
     setNewCommentText('')
   }
 
-  function handleNewCommentChange(){
+  function handleNewCommentChange(event){
+    event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
   }
 
+  function handleNewCommentInvalid(event) {
+    event.target.setCustomValidity('Esse campo é obrigatório!!!')
+  }
 
-export function Post({author, publishedAt, content}) {
+  function deleteComment(commentToDelete) {
+    const commentsWithoutDeletedOne = comments.filter(comment => {
+      return comment !== commentToDelete
+    })
+    setComments(commentsWithoutDeletedOne)
+  }
 
-const publishedDateFormatted = format(publishedAt, "dd 'de' LLLL 'às' HH:mm'h'", {
-  locale: ptBR,
-})
-
-const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
-  locale: ptBR,
-  addSuffix: true,
-})
+  const isNewCommentInputEmpty = newCommentText.length === 0;
 
     return(
       <article className="gap-8 bg-gray-800 rounded-lg p-10 mb-10">
@@ -87,8 +95,10 @@ const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
             <Link href="#" className="font-bold text-green-500 hover:text-green-300 no-underline">#rocketseat</Link>
           </p>
         </div>
-        <form  onSubmit={handleCreateNewComment}
-          className='w-full mt-6 pt-6 border border-transparent border-t-gray-600 flex flex-col group'>
+        <form  
+          onSubmit={handleCreateNewComment}
+          className='w-full mt-6 pt-6 border border-transparent border-t-gray-600 flex flex-col group'
+        >
           <strong className='text-gray-100 leading-6 mb-4'>Deixe seu Feedback</strong>
           <textarea 
               name='comment'
@@ -96,11 +106,14 @@ const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
               placeholder='Escreva um comentário...' 
               value={newCommentText}
               onChange={handleNewCommentChange}
+              onInvalid={handleNewCommentInvalid}
+              required
           />
           <footer className='invisible max-h-0 group-focus-within:visible group-focus-within:max-h-none'>
               <button 
+                  disabled={isNewCommentInputEmpty}
                   type='submit'
-                  className='inline-flex py-4 px-6 mt-4 rounded-lg bg-green-500 text-white justify-center items-center w-28 hover:bg-green-300  font-bold transition'
+                  className='inline-flex py-4 px-6 mt-4 rounded-lg bg-green-500 text-white justify-center items-center w-28 disabled:hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-70  font-bold transition'
               >
                   Publicar
               </button>
@@ -110,7 +123,13 @@ const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
 
         <div className=''>
           {comments.map(comment => {
-            return <Comment key={comment} content={comment} />
+            return (
+              <Comment 
+                key={comment} 
+                content={comment} 
+                onDeleteComment={deleteComment} 
+              />
+            )
           })}
         </div>
       </article>
